@@ -41,6 +41,7 @@ Configuration for this module is minimal, you need only define two constants in 
 ```
 define('CLOUDFLARE_AUTH_EMAIL', 'mycloudflare@example.com.au');
 define('CLOUDFLARE_AUTH_KEY', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ');
+define('CLOUDFLARE_ZONE_ID', '13b50a2b0c30e468cb658f43b9d46fff'); // optional
 ```
 
 ## Cache Rules

@@ -225,6 +225,10 @@ class CloudFlare extends Object
      */
     public function fetchZoneID()
     {
+        if (defined('CLOUDFLARE_ZONE_ID')) {
+            return CLOUDFLARE_ZONE_ID;
+        }
+
         if ($this->getCacheEnabled()) {
             $factory = \SS_Cache::factory("CloudFlare");
 
@@ -445,7 +449,7 @@ class CloudFlare extends Object
     {
         Deprecation::notice('2.0', 'This method has been moved to CloudFlare_Purge');
         $purger = CloudFlare_Purge::create();
-        
+
         return $purger->setResponse($response)->isSuccessful();
     }
 

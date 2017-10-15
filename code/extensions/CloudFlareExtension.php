@@ -26,9 +26,12 @@ class CloudFlareExtension extends SiteTreeExtension
             }
 
             if (
-                $this->owner->URLSegment != $original->URLSegment || // the slug has been altered
-                $this->owner->MenuTitle != $original->MenuTitle || // the navigation label has been altered
-                $this->owner->Title != $original->Title // the title has been altered
+                CloudFlare::config()->purge_all_on_publish &&
+                (
+                    $this->owner->URLSegment != $original->URLSegment || // the slug has been altered
+                    $this->owner->MenuTitle != $original->MenuTitle || // the navigation label has been altered
+                    $this->owner->Title != $original->Title // the title has been altered
+                )
             ) {
                 // purge everything
                 $purger
@@ -88,7 +91,7 @@ class CloudFlareExtension extends SiteTreeExtension
             }
 
         }
-        
+
         parent::onAfterPublish($original);
     }
 
@@ -97,7 +100,8 @@ class CloudFlareExtension extends SiteTreeExtension
      */
     public function onAfterUnpublish()
     {
-        if (CloudFlare::singleton()->hasCFCredentials()) {
+        if (CloudFlare::config()->purge_all_on_publish &&
+            CloudFlare::singleton()->hasCFCredentials()) {
             $purger = CloudFlare_Purge::create();
             $purger
                 ->setPurgeEverything(true)
@@ -198,7 +202,7 @@ class CloudFlareExtension extends SiteTreeExtension
 
         $actions->addFieldToTab(
             'ActionMenus.MoreOptions',
-            FormAction::create('purgesinglepageAction', 
+            FormAction::create('purgesinglepageAction',
                 _t(
                     'CloudFlare.ActionMenuPurge',
                     'Purge in CloudFlare'

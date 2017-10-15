@@ -13,6 +13,9 @@ CloudFlare:
   cache_enabled: true
   # Whether to purge related pages on publish as well
   should_purge_relations: true
+  # Purges the entire cache when Title/MenuTitle/URLSegment is changed or if a page is unpublished.
+  # This should be disabled on very high traffic websites.
+  purge_all_on_publish: true
   # Blacklist specific directories from the UI purger functions. Blacklisting directories can increase response
   # time significantly
   purge_dir_blacklist:
